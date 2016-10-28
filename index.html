@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img src="img/fritura.gif">
+
+<p>Random numbers: <span id="randomArrayTotalTime"></span> ms</p>
+<div id="randomArray"></div>
+<p>Sorted numbers: <span id="sortedArrayTotalTime"></span> ms</p>
+<div id="sortedArray"></div>
+<br><br>
+
+<script>
+
+if (window.Worker) {
+  var worker = new Worker("worker.js")
+
+  worker.onmessage = function(event) {
+    var retorno = event.data
+    document.getElementById("randomArrayTotalTime").innerHTML = retorno['randomArrayTotalTime'];
+    document.getElementById("randomArray").innerHTML = retorno['randomArray'];
+    document.getElementById("sortedArrayTotalTime").innerHTML = retorno['sortedArrayTotalTime'];
+    document.getElementById("sortedArray").innerHTML = retorno['sortedArray'];
+  }
+
+  worker.postMessage(200000)
+}
+</script>
+
+</body>
+</html>
